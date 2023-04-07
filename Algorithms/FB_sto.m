@@ -10,13 +10,13 @@ w = winit;
 % TO COMPLETE
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % functions g and h
-g=@(w) ...
-h=@(w) ...
+g=@(w) lambda * norm(w,1);
+h=@(w) (1/L) * sum(huber(Y - X_mat.' * w, delta));
 % approximated gradient of smooth function
 % compute only gradient wrt functions associated to indices given by Ind 
-grad_par =@(w, Ind) ...
+grad_par =@(w, Ind) (-1/size(Ind,2))*X_mat(:,Ind)*huber_grad(Y(Ind) - X_mat(:,Ind).' *w,delta);
 % proximity operator of non-smooth function
-prox =@(w, T) ...
+prox =@(w, T) max(abs(w)-T,0).*sign(w);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for it = 1:ItMax
@@ -30,8 +30,8 @@ for it = 1:ItMax
     % TO COMPLETE
     % stochastic prox gradient descent iterations
     % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    gamma = ... % step-size
-    w = ...
+    gamma = 1/((it+1)^theta); % step-size
+    w = prox(w - gamma * grad_par(w,Ind_it), lambda * gamma);
     % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     time(it) = toc(t_start) ;
     
