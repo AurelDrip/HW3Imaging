@@ -1,6 +1,5 @@
 clear all
 close all
-clc
 
 addpath Data
 addpath Algorithms
@@ -44,7 +43,9 @@ X_train_mat = reshape(X_train, N, L) ;
 % TO COMPLETE
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Lipschitz constant of smooth term
-beta = (1/L) * norm(X_train_mat, "fro")^2;
+% Frobenius norm used to compute squared root of the sum of the square of
+% every entity in the matrix
+beta = (norm(X_train_mat, "fro")^2)/L;
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % regularization parameters

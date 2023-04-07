@@ -9,12 +9,12 @@ w = winit;
 % TO COMPLETE
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Step-size
-gamma = 1.9/beta
+gamma = 1.9/beta;
 % functions g and h
 g=@(w) lambda * norm(w,1);
-h=@(w) 1/L * sum(huber(Y-X_mat.' *w,delta));
+h=@(w) 1/L * sum(huber(Y-X_mat' *w,delta));
 % gradient of smooth function
-grad =@(w) -1/L * X_mat*huber_grad(Y - X_mat.' * w,delta);  
+grad =@(w) -1/L * X_mat*huber_grad(Y - X_mat' * w,delta);  
 % proximity operator of non-smooth function
 prox =@(w,T) max(abs(w)-T,0).*sign(w);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
